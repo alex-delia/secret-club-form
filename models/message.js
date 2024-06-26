@@ -15,11 +15,14 @@ const messageSchema = new Schema({
         type: Date,
         required: true,
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    }
 });
 
 // messageSchema.virtual('url').get(function () {
 //     return `/message/${this._id}`;
 // });
-
 
 module.exports = mongoose.model('Message', messageSchema);
