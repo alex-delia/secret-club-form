@@ -3,6 +3,7 @@ const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 //display signup form on GET
 exports.signup_form_get = (req, res, next) => {
@@ -82,4 +83,38 @@ exports.signup_form_post = [
         res.redirect('/');
     })
 ];
+
+//display login form on GET
+exports.login_form_get = (req, res, next) => {
+    res.render('login_form', {
+        title: 'Log In',
+        message: req.flash('error'),
+        email: req.flash('email')
+    });
+};
+
+//display login form on GET  
+exports.login_form_post = function (req, res, next) {
+    passport.authenticate('local', function (err, user) {
+        if (err) { return next(err); }
+        if (!user) {
+            req.flash('error', 'Incorrect email or password.');
+            req.flash('email', req.body.email);
+            return res.redirect('/login');
+        }
+        req.logIn(user, function (err) {
+            if (err) { return next(err); }
+            return res.redirect('/');
+        });
+    })(req, res, next);
+};
+
+exports.logout_get = (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/");
+    });
+}
 

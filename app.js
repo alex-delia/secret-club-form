@@ -7,13 +7,23 @@ const passport = require('passport');
 const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+const flash = require('connect-flash');
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 
-const app = express();
 
+const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
+const mongoDB = process.env.MONGODB_URI;
+
+main().catch(err => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+}
+
+const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,34 +33,36 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true }
 }));
 app.use(passport.session());
+app.use(flash());
 
 passport.use(
-  new LocalStrategy(
-    async (email, password, done) => {
-      try {
-        const user = await User.findOne({ email: email });
+  new LocalStrategy({
+    usernameField: 'email',
+  }, async (username, password, done) => {
+    try {
+      const user = await User.findOne({ email: username });
 
-        if (!user) {
-          return done(null, false);
-        }
-
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) {
-          return done(null, false);
-        }
-        return done(null, user);
-
-      } catch (err) {
-        return done(err);
+      if (!user) {
+        return done(null, false);
       }
+
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        return done(null, false);
+      }
+      return done(null, user);
+
+    } catch (err) {
+      return done(err);
     }
+  }
   ));
 
 passport.serializeUser((user, done) => {
@@ -66,14 +78,10 @@ passport.deserializeUser(async (id, done) => {
   };
 });
 
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
-const mongoDB = process.env.MONGODB_URI;
-
-main().catch(err => console.log(err));
-async function main() {
-  await mongoose.connect(mongoDB);
-}
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use('/', indexRouter);
 
