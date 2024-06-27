@@ -9,20 +9,27 @@
     "build:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
+    "express-session": "^1.18.0",
     "express-validator": "^7.1.0",
     "http-errors": "^2.0.0",
     "mongoose": "^8.4.4",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.5.0",
     "@tailwindcss/forms": "^0.5.7",
     "autoprefixer": "^10.4.19",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
     "nodemon": "^3.1.4",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
