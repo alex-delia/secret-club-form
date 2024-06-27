@@ -2,7 +2,19 @@ const express = require('express');
 const router = express.Router();
 
 const userController = require('../controllers/userController');
-const passport = require('passport');
+
+// const checkAuthenticated = (req, res, next) => {
+//   if (req.isAuthenticated()) { return next(); }
+//   res.redirect("/login");
+// };
+
+//check if the user is logged in
+const checkLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+  next();
+};
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -10,12 +22,12 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET sign up. */
-router.get('/signup', userController.signup_form_get);
+router.get('/signup', checkLoggedIn, userController.signup_form_get);
 //POST request for signup
 router.post('/signup', userController.signup_form_post);
 
 /* GET login. */
-router.get('/login', userController.login_form_get);
+router.get('/login', checkLoggedIn, userController.login_form_get);
 /* POST login. */
 router.post('/login', userController.login_form_post);
 
