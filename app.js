@@ -3,6 +3,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const passport = require('passport');
+const LocalStrategy = require("passport-local").Strategy;
+const User = require('./models/user');
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
@@ -18,6 +23,48 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: true }
+}));
+app.use(passport.session());
+
+passport.use(
+  new LocalStrategy(
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ email: email });
+
+        if (!user) {
+          return done(null, false);
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+          return done(null, false);
+        }
+        return done(null, user);
+
+      } catch (err) {
+        return done(err);
+      }
+    }
+  ));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  };
+});
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
