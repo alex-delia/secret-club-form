@@ -80,7 +80,11 @@ exports.signup_form_post = [
         // Data from form is valid.
         // Save user.
         await user.save();
-        res.redirect('/');
+
+        req.login(user, function (err) {
+            if (err) { return next(err); }
+            return res.redirect('/');
+        });
     })
 ];
 
