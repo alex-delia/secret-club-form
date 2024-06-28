@@ -36,8 +36,8 @@ async function messageCreate(index, title, text, user) {
 async function createMessages() {
     console.log("Adding messages");
     await Promise.all([
-        messageCreate(0, 'Test Title', 'This is a test message to populate', '667cc5ab5b737d1284814e08'),
-        messageCreate(1, 'Suits is great', 'I\'ve been binging suits', '667ca0b73831fb46455ae814'),
-        messageCreate(2, 'Blah Blah', 'Yap Yap Yapperson', '667ca0b73831fb46455ae814'),
+        messageCreate(0, 'Test Title', 'This is a test message to populate', new mongoose.Types.ObjectId('667cc5ab5b737d1284814e08')),
+        messageCreate(1, 'Suits is great', 'I\'ve been binging suits', new mongoose.Types.ObjectId('667ca0b73831fb46455ae814')),
+        messageCreate(2, 'Blah Blah', 'Yap Yap Yapperson', new mongoose.Types.ObjectId('667ca0b73831fb46455ae814')),
     ]);
 }
