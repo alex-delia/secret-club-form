@@ -4,10 +4,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const messageController = require('../controllers/messageController');
 
-// const checkAuthenticated = (req, res, next) => {
-//   if (req.isAuthenticated()) { return next(); }
-//   res.redirect("/login");
-// };
+const asyncHandler = require('express-async-handler');
 
 //check if the user is logged in
 const checkLoggedIn = (req, res, next) => {
@@ -17,12 +14,12 @@ const checkLoggedIn = (req, res, next) => {
   next();
 };
 
-const messages = messageController.messages_list;
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', asyncHandler(async (req, res, next) => {
+  const messages = await messageController.fetchMessages();
   res.render('index', { title: 'Members Only Club', messages: messages });
-});
+}));
 
 /* GET sign up. */
 router.get('/signup', checkLoggedIn, userController.signup_form_get);
