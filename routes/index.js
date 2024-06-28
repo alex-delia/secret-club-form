@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userController = require('../controllers/userController');
+const messageController = require('../controllers/messageController');
 
 // const checkAuthenticated = (req, res, next) => {
 //   if (req.isAuthenticated()) { return next(); }
@@ -16,9 +17,11 @@ const checkLoggedIn = (req, res, next) => {
   next();
 };
 
+const messages = messageController.messages_list;
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Members Only Club' });
+  res.render('index', { title: 'Members Only Club', messages: messages });
 });
 
 /* GET sign up. */
