@@ -23,8 +23,11 @@
     <h2 class="mt-5 text-center text-2xl">
       Welcome <%= currentUser.firstName %>
     </h2>
+    <%- include('secretModal.ejs') %>
     <a href="/logout" class="mt-5 text-center text-xl text-red-500 hover:text-red-300">Log Out</a>
     <% } %>
+
+
 
     <% messages.forEach(message => { %>
     <div class="mt-5 p-3 border-2">
