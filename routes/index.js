@@ -6,9 +6,16 @@ const messageController = require('../controllers/messageController');
 
 const asyncHandler = require('express-async-handler');
 
-//check if the user is logged in
+//if user is logged in, redirect back to page
 const checkLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+  next();
+};
+
+const isAuthorized = (req, res, next) => {
+  if (!req.isAuthenticated()) {
     return res.redirect("/");
   }
   next();
@@ -24,14 +31,17 @@ router.get('/', asyncHandler(async (req, res, next) => {
 /* GET sign up. */
 router.get('/signup', checkLoggedIn, userController.signup_form_get);
 //POST request for signup
-router.post('/signup', userController.signup_form_post);
+router.post('/signup', checkLoggedIn, userController.signup_form_post);
 
 /* GET login. */
 router.get('/login', checkLoggedIn, userController.login_form_get);
 /* POST login. */
-router.post('/login', userController.login_form_post);
+router.post('/login', checkLoggedIn, userController.login_form_post);
 
 //GET logout
-router.get('/logout', userController.logout_get);
+router.get('/logout', isAuthorized, userController.logout_get);
+
+//POST secret
+router.post('/secret', isAuthorized, userController.secret_post);
 
 module.exports = router;
