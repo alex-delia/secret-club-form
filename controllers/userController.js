@@ -152,7 +152,11 @@ exports.secret_post = [
         await User.findByIdAndUpdate(res.locals.currentUser, { membership_status: 'member' });
         req.flash('secretCodeSuccess', 'Congrats, you are officially a MEMBER.');
         res.redirect('/');
-
     })
-]
+];
+
+//display signup form on GET
+exports.newMessage_get = (req, res, next) => {
+    res.render('new_message', { title: 'New Message' });
+};
 

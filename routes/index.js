@@ -44,4 +44,9 @@ router.get('/logout', isAuthorized, userController.logout_get);
 //POST secret
 router.post('/secret', isAuthorized, userController.secret_post);
 
+//GET newMessage
+router.get('/newMessage', isAuthorized, userController.newMessage_get);
+//POST newMessage
+router.post('/newMessage', isAuthorized, userController.newMessage_get);
+
 module.exports = router;
