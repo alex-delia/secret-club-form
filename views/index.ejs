@@ -56,6 +56,9 @@
       <span> - <%- message.user.fullname %></span>
       <% } %>
       <span class="block"><%= message.text %></span>
+      <% if (currentUser && currentUser.membership_status === 'member') {%>
+      <span class="text-sm text-gray-400"><%- message.timestamp %></span>
+      <% } %>
     </div>
     <% }) %>
 

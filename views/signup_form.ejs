@@ -24,11 +24,11 @@
                             aria-describedby="firstNameError"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<%- typeof user === 'undefined'  ? '' : user.firstName %>">
                         <% if(typeof errors !=='undefined' ){ %>
-                            <% const result=errors.filter((error)=> error.path === 'firstName') %>
-                                <span id="firstNameError" class="block text-sm text-red-500">
-                                    <%= result[0]?.msg %>
-                                </span>
-                                <% } %>
+                        <% const result=errors.filter((error)=> error.path === 'firstName') %>
+                        <span id="firstNameError" class="block text-sm text-red-500">
+                            <%= result[0]?.msg %>
+                        </span>
+                        <% } %>
                     </div>
                 </div>
 
@@ -39,11 +39,11 @@
                             aria-describedby="lastNameError"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<%- typeof user === 'undefined'  ? '' : user.lastName %>">
                         <% if(typeof errors !=='undefined' ){ %>
-                            <% const result=errors.filter((error)=> error.path === 'lastName') %>
-                                <span id="lastNameError" class="block text-sm text-red-500">
-                                    <%= result[0]?.msg %>
-                                </span>
-                                <% } %>
+                        <% const result=errors.filter((error)=> error.path === 'lastName') %>
+                        <span id="lastNameError" class="block text-sm text-red-500">
+                            <%= result[0]?.msg %>
+                        </span>
+                        <% } %>
                     </div>
                 </div>
 
@@ -54,11 +54,11 @@
                             aria-describedby="emailError"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<%= typeof user === 'undefined'  ? '' : user.email %>">
                         <% if(typeof errors !=='undefined' ){ %>
-                            <% const result=errors.filter((error)=> error.path === 'email') %>
-                                <span id="emailError" class="block text-sm text-red-500">
-                                    <%= result[0]?.msg %>
-                                </span>
-                                <% } %>
+                        <% const result=errors.filter((error)=> error.path === 'email') %>
+                        <span id="emailError" class="block text-sm text-red-500">
+                            <%= result[0]?.msg %>
+                        </span>
+                        <% } %>
                     </div>
                 </div>
 
@@ -75,11 +75,11 @@
                                         <% } %> -->
 
                         <% if(typeof errors !=='undefined' ){ %>
-                            <% const result=errors.filter((error)=> error.path === 'password') %>
-                                <span class="block text-sm text-red-500" id="passwordError">
-                                    <%= result[0]?.msg %>
-                                </span>
-                                <% } %>
+                        <% const result=errors.filter((error)=> error.path === 'password') %>
+                        <span class="block text-sm text-red-500" id="passwordError">
+                            <%= result[0]?.msg %>
+                        </span>
+                        <% } %>
                     </div>
                 </div>
 
@@ -89,18 +89,13 @@
                         <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
                             aria-describedby="confirmPasswordError"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <!-- <% if(typeof errors !=='undefined' ){ %>
-                        <% if(errors.filter((error)=> error.path === 'password' || error.path ==='confirmPassword').length === 0){ %>
-                            value="<%= typeof user==='undefined' ? '' : user.confirmPassword %>"
-                                <% } %>
-                                    <% } %> -->
 
                         <% if(typeof errors !=='undefined' ){ %>
-                            <% const result=errors.filter((error)=> error.path === 'confirmPassword') %>
-                                <span id="confirmPasswordError" class="block text-sm text-red-500">
-                                    <%= result[0]?.msg %>
-                                </span>
-                                <% } %>
+                        <% const result=errors.filter((error)=> error.path === 'confirmPassword') %>
+                        <span id="confirmPasswordError" class="block text-sm text-red-500">
+                            <%= result[0]?.msg %>
+                        </span>
+                        <% } %>
                     </div>
                 </div>
 

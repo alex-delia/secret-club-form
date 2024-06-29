@@ -143,7 +143,6 @@ exports.secret_post = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            console.log(errors);
             // There are errors. Render form again with sanitized values/errors messages.
             req.flash('secretCodeError', 'Incorrect code.');
             return res.redirect('/');
@@ -154,9 +153,3 @@ exports.secret_post = [
         res.redirect('/');
     })
 ];
-
-//display signup form on GET
-exports.newMessage_get = (req, res, next) => {
-    res.render('new_message', { title: 'New Message' });
-};
-
