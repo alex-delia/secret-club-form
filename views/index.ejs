@@ -57,7 +57,7 @@
       <% } %>
       <span class="block"><%= message.text %></span>
       <% if (currentUser && currentUser.membership_status === 'member') {%>
-      <span class="text-sm text-gray-400"><%- message.timestamp %></span>
+      <span class="text-sm text-gray-400"><%- `${message.timestamp.toDateString()}, ${message.timestamp.toLocaleTimeString()}` %></span>
       <% } %>
     </div>
     <% }) %>
