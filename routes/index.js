@@ -25,7 +25,7 @@ const isAuthorized = (req, res, next) => {
 /* GET home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
   const messages = await messageController.fetchMessages();
-  res.render('index', { title: 'Members Only Club', messages: messages });
+  res.render('index', { title: 'Members Only Club', messages: messages, secretCodeError: req.flash('secretCodeError'), secretCodeSuccess: req.flash('secretCodeSuccess') });
 }));
 
 /* GET sign up. */

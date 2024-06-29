@@ -4,6 +4,7 @@ const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+require('dotenv').config();
 
 //display signup form on GET
 exports.signup_form_get = (req, res, next) => {
@@ -97,7 +98,7 @@ exports.login_form_get = (req, res, next) => {
     });
 };
 
-//display login form on GET  
+//handle login form on POST  
 exports.login_form_post = function (req, res, next) {
     passport.authenticate('local', function (err, user) {
         if (err) { return next(err); }
@@ -120,5 +121,38 @@ exports.logout_get = (req, res, next) => {
         }
         res.redirect("/");
     });
-}
+};
+
+exports.secret_post = [
+    body('secret')
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage('Must be atleast 1 character.')
+        .custom(value => {
+            if (value !== process.env.SECRET_CODE) {
+                console.log('Value: ' + value);
+                throw new Error('Incorrect Code');
+            }
+            return true;
+        })
+        .escape(),
+
+    // Process request after validation and sanitization.
+    asyncHandler(async (req, res, next) => {
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            console.log(errors);
+            // There are errors. Render form again with sanitized values/errors messages.
+            req.flash('secretCodeError', 'Incorrect code.');
+            return res.redirect('/');
+        }
+
+        await User.findByIdAndUpdate(res.locals.currentUser, { membership_status: 'member' });
+        req.flash('secretCodeSuccess', 'Congrats, you are officially a MEMBER.');
+        res.redirect('/');
+
+    })
+]
 
