@@ -25,7 +25,17 @@ const isAuthorized = (req, res, next) => {
 /* GET home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
   const messages = await messageController.fetchMessages();
-  res.render('index', { title: 'Members Only Club', messages: messages, secretCodeError: req.flash('secretCodeError'), secretCodeSuccess: req.flash('secretCodeSuccess') });
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true // Use 12-hour format
+  };
+
+  res.render('index', { title: 'Members Only Club', messages: messages, options: options, secretCodeError: req.flash('secretCodeError'), secretCodeSuccess: req.flash('secretCodeSuccess') });
 }));
 
 /* GET sign up. */
