@@ -57,7 +57,12 @@
       <% } %>
       <span class="block"><%- message.text %></span>
       <% if (currentUser && currentUser.membership_status === 'member') {%>
-      <span class="text-sm text-gray-400"><%- `${message.timestamp.toDateString()}, ${message.timestamp.toLocaleTimeString()}` %></span>
+      <span class="text-sm text-gray-400"><%- 
+      `${new Date(message.timestamp)
+      .toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} at
+          ${new Date(message.timestamp)
+          .toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}` %>
+      </span>
       <% } %>
     </div>
     <% }) %>
