@@ -51,11 +51,11 @@
 
     <% messages.forEach(message => { %>
     <div class="mt-5 p-3 border-2">
-      <span class="font-bold"><%= message.title %></span>
+      <span class="font-bold"><%- message.title %></span>
       <% if (currentUser && currentUser.membership_status === 'member') {%>
       <span> - <%- message.user.fullname %></span>
       <% } %>
-      <span class="block"><%= message.text %></span>
+      <span class="block"><%- message.text %></span>
       <% if (currentUser && currentUser.membership_status === 'member') {%>
       <span class="text-sm text-gray-400"><%- `${message.timestamp.toDateString()}, ${message.timestamp.toLocaleTimeString()}` %></span>
       <% } %>
